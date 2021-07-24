@@ -5,21 +5,51 @@ const products = [
   { id: 4, title: 'Gamepad', price: 50, image: './images/products/Gamepad.png', },
 ];
 
+/*
+const cart = [];
+*/
+
 class ProductsList {
   constructor (container) {
     this.container = container;
     this.products = [];
   }
 
-  _fetchProducts (products) {
+  #fetchProducts (products) {
     this.products = products;
+    this.#totalProductsPrice();
+  }
+
+  #totalProductsPrice () {
+    let sum = 0;
+    this.products.forEach(product => {
+      return sum += product.price;
+    });
+    console.log(sum); // Суммарную стоимость всех товаров
   }
 
   renderProductsList () {
+    this.#fetchProducts(products);
+
     const block = document.querySelector(this.container);
     this.products.forEach(product => {
       product = new Product(product);
       block.insertAdjacentHTML('beforeend', product.renderProduct());
+    });
+
+    this.getProductInfo();
+  }
+
+  // В дальнейшем перестройка в метод addProductInCart
+  getProductInfo () {
+    const productBtns = document.querySelectorAll('.product__btn');
+    productBtns.forEach(productBtn => {
+      productBtn.addEventListener('click', evt => {
+        const productInfo = this.products.find(product => {
+          return product.id === parseInt(evt.target.dataset.product_id);
+        });
+        console.log(productInfo);
+      });
     });
   }
 }
@@ -35,12 +65,28 @@ class Product {
         <img class="product__image" src="${this.product.image}" alt="product-image">
         <h3 class="product__title">${this.product.title}</h3>
         <p class="product__price">${this.product.price}</p>
-        <button class="product__btn" data-product-id="${this.product.id}">Купить</button>
+        <button class="product__btn" data-product_id="${this.product.id}">Купить</button>
     </div>
     `;
   }
 }
 
 const productsList = new ProductsList('.products-list');
-productsList._fetchProducts(products);
-productsList.renderProductsList();
+productsList.renderProductsList(products);
+
+/*
+class Cart {
+  constructor (container) {
+    this.container = container;
+    this.cart = [];
+  }
+
+  renderProductInCart () {
+
+  }
+
+  showTotalPrice () {
+
+  }
+}
+*/
