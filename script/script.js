@@ -5,32 +5,42 @@ const products = [
   { id: 4, title: 'Gamepad', price: 50, image: './images/products/Gamepad.png', },
 ];
 
-const renderProduct = (product) => {
-  return `
-    <div class="product products-list__product">
-        <img class="product__image" src="${product.image}" alt="product-image">
-        <h3 class="product__title">${product.title}</h3>
-        <p class="product__price">${product.price}</p>
-        <button class="product__btn" data-product-id="${product.id}">Купить</button>
+class ProductsList {
+  constructor (container) {
+    this.container = container;
+    this.products = [];
+  }
+
+  _fetchProducts (products) {
+    this.products = products;
+  }
+
+  renderProductsList () {
+    const block = document.querySelector(this.container);
+    this.products.forEach(product => {
+      product = new Product(product);
+      block.insertAdjacentHTML('beforeend', product.renderProduct());
+    });
+  }
+}
+
+class Product {
+  constructor (product) {
+    this.product = product;
+  }
+
+  renderProduct () {
+    return `
+      <div class="product products-list__product">
+        <img class="product__image" src="${this.product.image}" alt="product-image">
+        <h3 class="product__title">${this.product.title}</h3>
+        <p class="product__price">${this.product.price}</p>
+        <button class="product__btn" data-product-id="${this.product.id}">Купить</button>
     </div>
-  `;
-};
+    `;
+  }
+}
 
-/*
-const renderProductsList = products => {
-  const productsList = document.querySelector('.products-list');
-  products.forEach(product => {
-    productsList.insertAdjacentHTML('beforeend', renderProduct(product));
-  });
-};
-
-renderProductsList(products);
-*/
-
-const renderProductsList = list => {
-  const productsList = list.map(item => renderProduct(item));
-  console.log(productsList);
-  document.querySelector('.products-list').innerHTML = productsList.join('');
-};
-
-renderProductsList(products);
+const productsList = new ProductsList('.products-list');
+productsList._fetchProducts(products);
+productsList.renderProductsList();
