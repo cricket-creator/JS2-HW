@@ -1,0 +1,26 @@
+.header {
+    &__wrap {
+        padding: 50px 0;
+        display: flex;
+        justify-content: flex-end;
+        border-bottom: 1px solid #ffffff;
+    }
+}
+
+.cart__btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border: 1px solid #000000;
+    border-radius: 20px;
+
+    &:hover {
+        background-color: #000000;
+        color: #ffffff;
+        transition: background-color 300ms;
+    }
+}
