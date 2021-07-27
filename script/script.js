@@ -1,46 +1,34 @@
-/*
-const products = [
-  { id: 1, title: 'Notebook', price: 2000, image: './images/products/Notebook.png', },
-  { id: 2, title: 'Mouse', price: 20, image: './images/products/Mouse.png', },
-  { id: 3, title: 'Keyboard', price: 200, image: './images/products/Keyboard.png', },
-  { id: 4, title: 'Gamepad', price: 50, image: './images/products/Gamepad.png', },
-];
-*/
-
 const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
 
 class ProductsList {
   constructor (container) {
     this.container = container;
     this.products = [];
+    this.fetchProducts()
+      .then(data => {
+        this.products = [...data];
+        this.#totalProductsPrice();
+        this.renderProductsList();
+      });
   }
 
   fetchProducts () {
-    fetch(`${API}/catalogData.json`)
-      .then(str => str.json())
-      .then(data => {
-        data.forEach(el => {
-          this.products.push(el);
-          return this.products;
-        });
-      })
-      .then(() => {
-        this.#totalProductsPrice(this.products);
-        this.#renderProductsList();
-        this.getProductInfo();
-      });
+    return fetch(`${API}/catalogData.json`)
+      .then(result => result.json())
+      .catch(error => console.log(error));
   }
 
   #totalProductsPrice () {
     return console.log(this.products.reduce((total, product) => total + product.price, 0));
   }
 
-  #renderProductsList () {
+  renderProductsList () {
     const block = document.querySelector(this.container);
-    this.products.forEach(product => {
-      let dataProduct = new Product(product);
-      block.insertAdjacentHTML('beforeend', dataProduct.renderProduct());
-    });
+    for (const product of this.products) {
+      const productObj = new Product(product);
+      block.insertAdjacentHTML('beforeend', productObj.renderProduct());
+    }
+    this.getProductInfo();
   }
 
   // В дальнейшем перестройка в метод addProductInCart
@@ -74,7 +62,7 @@ class Product {
 }
 
 const productsList = new ProductsList('.products-list');
-productsList.fetchProducts();
+productsList.renderProductsList();
 
 /*
 class Cart {
@@ -91,6 +79,33 @@ class Cart {
 
   }
 }
+*/
+
+/*
+const products = [
+  { id: 1, title: 'Notebook', price: 2000, image: './images/products/Notebook.png', },
+  { id: 2, title: 'Mouse', price: 20, image: './images/products/Mouse.png', },
+  { id: 3, title: 'Keyboard', price: 200, image: './images/products/Keyboard.png', },
+  { id: 4, title: 'Gamepad', price: 50, image: './images/products/Gamepad.png', },
+];
+*/
+
+/*
+fetchProducts () {
+    fetch(`${API}/catalogData.json`)
+      .then(str => str.json())
+      .then(data => {
+        data.forEach(el => {
+          this.products.push(el);
+          return this.products;
+        });
+      })
+      .then(() => {
+        this.#totalProductsPrice(this.products);
+        this.#renderProductsList();
+        this.getProductInfo();
+      });
+  }
 */
 
 // <img className="product__image" src="${this.product.image}" alt="product-image">
