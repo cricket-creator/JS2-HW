@@ -4,7 +4,7 @@ class ProductsList {
   constructor (container) {
     this.container = container;
     this.products = [];
-    this.fetchProducts()
+    this.#fetchProducts()
       .then(data => {
         this.products = [...data];
         this.#totalProductsPrice();
@@ -12,7 +12,7 @@ class ProductsList {
       });
   }
 
-  fetchProducts () {
+  #fetchProducts () {
     return fetch(`${API}/catalogData.json`)
       .then(result => result.json())
       .catch(error => console.log(error));
@@ -28,11 +28,11 @@ class ProductsList {
       const productObj = new Product(product);
       block.insertAdjacentHTML('beforeend', productObj.renderProduct());
     }
-    this.getProductInfo();
+    this.#getProductInfo();
   }
 
   // В дальнейшем перестройка в метод addProductInCart
-  getProductInfo () {
+  #getProductInfo () {
     const productBtns = document.querySelectorAll('.product__btn');
     productBtns.forEach(productBtn => {
       productBtn.addEventListener('click', evt => {
