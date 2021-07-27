@@ -64,6 +64,18 @@ class Product {
 const productsList = new ProductsList('.products-list');
 productsList.renderProductsList();
 
+const cartShowBtn = document.querySelector('#cart-id');
+cartShowBtn.addEventListener('click', () => {
+  const cart = document.querySelector('.cart');
+  cart.classList.toggle('cart--is-closed');
+
+  if (cart.classList.contains('cart--is-closed')) {
+    cartShowBtn.textContent = 'Корзина';
+  } else {
+    cartShowBtn.textContent = 'Скрыть';
+  }
+});
+
 /*
 class Cart {
   constructor (container) {

@@ -11,10 +11,42 @@
 <body>
 <header class="header container">
     <div class="header__wrap">
-        <button class="cart__btn" type="button">Корзина</button>
+        <button id="cart-id" class="cart__btn" type="button">Корзина</button>
     </div>
 </header>
 <main class="main">
+    <div class="cart cart--is-closed">
+        <div class="cart__wrap container">
+            <h2 class="cart__title">Корзина</h2>
+            <div class="cart-list">
+                <div class="cart-product cart-list__product">
+                    <h3 class="cart-product__title">${this.product.product_name}</h3>
+                    <p class="cart-product__price">${this.product.price}</p>
+                    <button class="cart-product__btn" data-product_id="${this.product.id_product}">x</button>
+                </div>
+                <div class="cart-product cart-list__product">
+                    <h3 class="cart-product__title">${this.product.product_name}</h3>
+                    <p class="cart-product__price">${this.product.price}</p>
+                    <button class="cart-product__btn" data-product_id="${this.product.id_product}">x</button>
+                </div>
+                <div class="cart-product cart-list__product">
+                    <h3 class="cart-product__title">${this.product.product_name}</h3>
+                    <p class="cart-product__price">${this.product.price}</p>
+                    <button class="cart-product__btn" data-product_id="${this.product.id_product}">x</button>
+                </div>
+                <div class="cart-product cart-list__product">
+                    <h3 class="cart-product__title">${this.product.product_name}</h3>
+                    <p class="cart-product__price">${this.product.price}</p>
+                    <button class="cart-product__btn" data-product_id="${this.product.id_product}">x</button>
+                </div>
+                <div class="cart-product cart-list__product">
+                    <h3 class="cart-product__title">${this.product.product_name}</h3>
+                    <p class="cart-product__price">${this.product.price}</p>
+                    <button class="cart-product__btn" data-product_id="${this.product.id_product}">x</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <section class="products">
         <div class="products__wrap container">
             <div class="products-list"></div>

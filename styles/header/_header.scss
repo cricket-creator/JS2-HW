@@ -1,4 +1,6 @@
 .header {
+    position: relative;
+
     &__wrap {
         padding: 50px 0;
         display: flex;
@@ -8,11 +10,6 @@
 }
 
 .cart {
-    &-list {
-        &__product {
-            /* классы для корзины и её элементов */
-        }
-    }
 
     &__btn {
         display: flex;
