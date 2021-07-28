@@ -68,27 +68,7 @@ const cartShowBtn = document.querySelector('#cart-id');
 cartShowBtn.addEventListener('click', () => {
   const cart = document.querySelector('.cart');
   cart.classList.toggle('cart--is-closed');
-
-  if (cart.classList.contains('cart--is-closed')) {
-    cartShowBtn.textContent = 'Корзина';
-
-    let cartWidth = 40; // инструкция для увеличения ширины кнопки при нажатии
-    const increaseBtnLength = setInterval(() => {
-      cartShowBtn.style.width = `${cartWidth}px`;
-      cartWidth++;
-      cartWidth > 150 && clearInterval(increaseBtnLength);
-    });
-  } else {
-    cartShowBtn.textContent = 'x';
-
-    let cartWidth = 150; // инструкция для уменьшения ширины кнопки при нажатии
-    const reduceBtnLength = setInterval(() => {
-      cartShowBtn.style.width = `${cartWidth}px`;
-      cartWidth--;
-      cartWidth < 40 && clearInterval(reduceBtnLength);
-    });
-  }
-
+  changeBtnWidth(cart);
 });
 
 class Cart {
@@ -98,7 +78,7 @@ class Cart {
     this.#fetchCartItems()
       .then(data => {
         this.cart = [...data.contents];
-        this.#showTotalPrice();
+        this.#showCartTotalPrice();
         this.renderProductInCart();
       });
   }
@@ -117,10 +97,10 @@ class Cart {
     }
   }
 
-  #showTotalPrice () {
-    const cartTotalPrice = this.cart.reduce((total, cartItem) => total + cartItem.price, 0);
+  #showCartTotalPrice () {
     const totalPriceBlock = document.querySelector('.cart__total').querySelector('span');
-    return totalPriceBlock.textContent = `Итого: ${cartTotalPrice} руб.`;
+    const totalPrice = this.cart.reduce((total, product) => total + product.price, 0);
+    return totalPriceBlock.textContent = `Итого: ${totalPrice} руб.`;
   }
 }
 
@@ -171,3 +151,25 @@ fetchProducts () {
 */
 
 // <img className="product__image" src="${this.product.image}" alt="product-image">
+
+function changeBtnWidth (elem) {
+  if (elem.classList.contains('cart--is-closed')) {
+    cartShowBtn.textContent = 'Корзина';
+
+    let btnWidth = 40; // инструкция для увеличения ширины кнопки при нажатии
+    const increaseBtnLength = setInterval(() => {
+      cartShowBtn.style.width = `${btnWidth}px`;
+      btnWidth++;
+      btnWidth > 150 && clearInterval(increaseBtnLength);
+    });
+  } else {
+    cartShowBtn.textContent = 'x';
+
+    let btnWidth = 150; // инструкция для уменьшения ширины кнопки при нажатии
+    const reduceBtnLength = setInterval(() => {
+      cartShowBtn.style.width = `${btnWidth}px`;
+      btnWidth--;
+      btnWidth < 40 && clearInterval(reduceBtnLength);
+    });
+  }
+}
