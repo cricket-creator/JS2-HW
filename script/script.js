@@ -54,10 +54,9 @@ class Product {
     return `
       <div class="product products-list__product">
         <h3 class="product__title">${this.product.product_name}</h3>
-        <p class="product__price">${this.product.price}</p>
+        <p class="product__price">${this.product.price} руб.</p>
         <button class="product__btn" data-product_id="${this.product.id_product}">Купить</button>
-    </div>
-    `;
+      </div>`;
   }
 }
 
@@ -65,33 +64,84 @@ const productsList = new ProductsList('.products-list');
 productsList.renderProductsList();
 
 const cartShowBtn = document.querySelector('#cart-id');
+
 cartShowBtn.addEventListener('click', () => {
   const cart = document.querySelector('.cart');
   cart.classList.toggle('cart--is-closed');
 
   if (cart.classList.contains('cart--is-closed')) {
     cartShowBtn.textContent = 'Корзина';
+
+    let cartWidth = 40; // инструкция для увеличения ширины кнопки при нажатии
+    const increaseBtnLength = setInterval(() => {
+      cartShowBtn.style.width = `${cartWidth}px`;
+      cartWidth++;
+      cartWidth > 150 && clearInterval(increaseBtnLength);
+    });
   } else {
-    cartShowBtn.textContent = 'Скрыть';
+    cartShowBtn.textContent = 'x';
+
+    let cartWidth = 150; // инструкция для уменьшения ширины кнопки при нажатии
+    const reduceBtnLength = setInterval(() => {
+      cartShowBtn.style.width = `${cartWidth}px`;
+      cartWidth--;
+      cartWidth < 40 && clearInterval(reduceBtnLength);
+    });
   }
+
 });
 
-/*
 class Cart {
   constructor (container) {
     this.container = container;
     this.cart = [];
+    this.#fetchCartItems()
+      .then(data => {
+        this.cart = [...data.contents];
+        this.#showTotalPrice();
+        this.renderProductInCart();
+      });
+  }
+
+  #fetchCartItems () {
+    return fetch(`${API}/getBasket.json`)
+      .then(cartItems => cartItems.json())
+      .catch(error => console.log(error));
   }
 
   renderProductInCart () {
-
+    const cartBlock = document.querySelector(this.container);
+    for (const cartElement of this.cart) {
+      const cartItem = new CartItem(cartElement);
+      cartBlock.insertAdjacentHTML('beforeend', cartItem.renderCartItem());
+    }
   }
 
-  showTotalPrice () {
-
+  #showTotalPrice () {
+    const cartTotalPrice = this.cart.reduce((total, cartItem) => total + cartItem.price, 0);
+    const totalPriceBlock = document.querySelector('.cart__total').querySelector('span');
+    return totalPriceBlock.textContent = `Итого: ${cartTotalPrice} руб.`;
   }
 }
-*/
+
+class CartItem {
+  constructor (cartItem) {
+    this.cartItem = cartItem;
+  }
+
+  renderCartItem () {
+    return `
+      <div class="cart-product cart-list__product">
+        <h3 class="cart-product__title">${this.cartItem.product_name}</h3>
+        <p class="cart-product__quantity">Кол-во: ${this.cartItem.quantity} шт.</p>
+        <p class="cart-product__price">${this.cartItem.price} руб.</p>
+        <button class="cart-product__btn" data-product_id="${this.cartItem.id_product}">x</button>
+      </div>`;
+  }
+}
+
+const cart = new Cart('.cart-list');
+cart.renderProductInCart();
 
 /*
 const products = [
