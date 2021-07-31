@@ -1,5 +1,106 @@
 const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
 
+class List {
+  constructor (container, url, list = list2) {
+    this.container = container;
+    this.url = url;
+    this.list = list;
+    this.items = [];
+  }
+
+  getData (url) {
+    return fetch(url ? url : `${API}/${this.url}`)
+      .then(data => data.json())
+      .catch(error => console.log(error));
+  }
+
+  pushData (data) {
+    this.items = [...data];
+    this.renderList();
+  }
+
+  renderList () {
+    const block = document.querySelector(this.container);
+    for (const item of this.items) {
+      const itemObj = new this.list[this.constructor.name](item);
+      block.insertAdjacentHTML('beforeend', itemObj.renderItem());
+    }
+  }
+
+  getTotalPrice () {
+    return this.items.reduce((total, item) => total + item.price, 0);
+  }
+}
+
+class Item {
+  constructor (item) {
+    this.item = item;
+  }
+
+  renderItem () {
+    // верстка
+  }
+}
+
+class Catalog extends List {
+  constructor (container = '.products-list', url = 'catalogData.json') {
+    super(container, url);
+    this.getData()
+      .then(data => this.pushData(data));
+  }
+}
+
+class CatalogItem extends Item {
+  constructor (item) {
+    super(item);
+  }
+
+  renderItem () {
+    return `
+      <div class="product products-list__product">
+        <h3 class="product__title">${this.item.product_name}</h3>
+        <p class="product__price">${this.item.price} руб.</p>
+        <button class="product__btn" data-product_id="${this.item.id_product}">Купить</button>
+      </div>`;
+  }
+}
+
+class Cart extends List {
+  constructor (container = '.cart-list', url = 'getBasket.json') {
+    super(container, url);
+    this.getData()
+      .then(data => this.pushData(data));
+  }
+
+}
+
+class CartItem extends Item {
+  constructor (item) {
+    super(item);
+  }
+
+  renderItem () {
+    return `
+      <div class="cart-product cart-list__product">
+        <h3 class="cart-product__title">${this.item.product_name}</h3>
+        <p class="cart-product__quantity">Кол-во: ${this.item.quantity} шт.</p>
+        <p class="cart-product__price">${this.item.price} руб.</p>
+        <button class="cart-product__btn" data-product_id="${this.item.id_product}">x</button>
+      </div>`;
+  }
+}
+
+const list2 = {
+  Catalog: CatalogItem,
+  Cart: CartItem,
+};
+
+let catalog = new Catalog();
+let cart = new Cart();
+
+// let Catalog = new List('.products', 'catalogData.json');
+
+/*
 class ProductsList {
   constructor (container) {
     this.container = container;
@@ -122,6 +223,7 @@ class CartItem {
 
 const cart = new Cart('.cart-list');
 cart.renderProductInCart();
+*/
 
 /*
 const products = [
