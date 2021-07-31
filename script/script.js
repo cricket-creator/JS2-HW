@@ -25,10 +25,15 @@ class List {
       const itemObj = new this.list[this.constructor.name](item);
       block.insertAdjacentHTML('beforeend', itemObj.renderItem());
     }
+    this.init();
   }
 
   getTotalPrice () {
     return this.items.reduce((total, item) => total + item.price, 0);
+  }
+
+  init () {
+    // события
   }
 }
 
@@ -47,6 +52,15 @@ class Catalog extends List {
     super(container, url);
     this.getData()
       .then(data => this.pushData(data));
+  }
+
+  init () {
+    document.querySelector(this.container).addEventListener('click', evt => {
+      if (evt.target.classList.contains('product__btn')) {
+        const getItemId = +evt.target.dataset.product_id;
+        return this.items.find(item => item.id_product === getItemId);
+      }
+    });
   }
 }
 
@@ -69,9 +83,17 @@ class Cart extends List {
   constructor (container = '.cart-list', url = 'getBasket.json') {
     super(container, url);
     this.getData()
-      .then(data => this.pushData(data));
+      .then(data => this.pushData(data.contents));
   }
 
+  init () {
+    const cartShowBtn = document.querySelector('#cart-id');
+    cartShowBtn.addEventListener('click', () => {
+      const cart = document.querySelector('.cart');
+      cart.classList.toggle('cart--is-closed');
+      changeBtnWidth(cartShowBtn, cart);
+    });
+  }
 }
 
 class CartItem extends Item {
@@ -254,22 +276,22 @@ fetchProducts () {
 
 // <img className="product__image" src="${this.product.image}" alt="product-image">
 
-function changeBtnWidth (elem) {
+function changeBtnWidth (btn, elem) {
   if (elem.classList.contains('cart--is-closed')) {
-    cartShowBtn.textContent = 'Корзина';
+    btn.textContent = 'Корзина';
 
     let btnWidth = 40; // инструкция для увеличения ширины кнопки при нажатии
     const increaseBtnLength = setInterval(() => {
-      cartShowBtn.style.width = `${btnWidth}px`;
+      btn.style.width = `${btnWidth}px`;
       btnWidth++;
       btnWidth > 150 && clearInterval(increaseBtnLength);
     });
   } else {
-    cartShowBtn.textContent = 'x';
+    btn.textContent = 'x';
 
     let btnWidth = 150; // инструкция для уменьшения ширины кнопки при нажатии
     const reduceBtnLength = setInterval(() => {
-      cartShowBtn.style.width = `${btnWidth}px`;
+      btn.style.width = `${btnWidth}px`;
       btnWidth--;
       btnWidth < 40 && clearInterval(reduceBtnLength);
     });
