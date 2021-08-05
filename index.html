@@ -9,9 +9,54 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-<section class="products">
-    <div class="products-list container"></div>
+<section id="products" class="products">
+    <div v-for="product of products">
+        <img :src="imgCatalog" alt="someimage">
+        <h2>{{ product.product_name }}</h2>
+        <span> {{ product.price }}</span>
+        <button @click="" :data-id=`${product.id_product}`>Купить</button>
+    </div>
 </section>
-<script src="./script/script.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+
+<script>
+  const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+
+  const products = new Vue({
+    el: '#products',
+    data: {
+      catalogURL: '/catalogData.json',
+      products: [],
+      imgCatalog: 'https://via.placeholder.com/200x150',
+      userSearch: '',
+      show: false,
+    },
+    methods: {
+      getJson (url) {
+        return fetch(url)
+          .then(result => result.json())
+          .catch(err => console.log(err));
+      },
+      addProduct (product) {
+        console.log(product.id_product);
+      }
+    },
+    mounted () {
+      this.getJson(`${API + this.catalogURL}`)
+        .then(data => {
+          for (const dataElem of data) {
+            this.products.push(dataElem);
+          }
+        });
+      this.getJson(`getProducts.json`)
+        .then(data => {
+          for (const dataElem of data) {
+            this.products.push(dataElem);
+          }
+        });
+    }
+  });
+</script>
 </body>
 </html>
