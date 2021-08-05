@@ -9,54 +9,42 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-<section id="products" class="products">
-    <div v-for="product of products">
-        <img :src="imgCatalog" alt="someimage">
-        <h2>{{ product.product_name }}</h2>
-        <span> {{ product.price }}</span>
-        <button @click="" :data-id=`${product.id_product}`>Купить</button>
+<div id="app">
+    <header class="header container">
+        <div class="logo">E-shop</div>
+        <div class="cart">
+            <form action="#" class="search-form" @submit.prevent="filter">
+                <input v-model="userSearch" type="text" class="search-field">
+                <button class="btn-search" type="submit">
+                    Поиск
+                </button>
+            </form>
+            <button class="btn-cart" type="button" @click="show = !show">Корзина</button>
+            <div class="cart-block invisible" v-show="show" @mouseleave="closeCart">
+                <div v-if="!cart.length">Cart is empty</div>
+                <div class="item cart__item" v-for="product of this.cart">
+                    <img :src="imgCatalog" alt="someimage" class="item__image">
+                    <h2 class="item__title">{{ product.product_name }}</h2>
+                    <p class="item__quantity">{{ product.quantity }}</p>
+                    <p class="item__price"> {{ product.price }}</p>
+                    <button @click="deleteProduct(product)" class="item__btn">Удалить</button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div id="products" class="products container">
+        <div v-if="!filtered.length">Product list is empty</div>
+        <div v-for="product of this.filtered" class="product products__product">
+            <img :src="imgCatalog" alt="someimage" class="product__image">
+            <h2 class="product__title">{{ product.product_name }}</h2>
+            <p class="product__price"> {{ product.price }}</p>
+            <button @click="addProduct(product)" class="product__btn">Купить</button>
+        </div>
     </div>
-</section>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 
-<script>
-  const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
-
-  const products = new Vue({
-    el: '#products',
-    data: {
-      catalogURL: '/catalogData.json',
-      products: [],
-      imgCatalog: 'https://via.placeholder.com/200x150',
-      userSearch: '',
-      show: false,
-    },
-    methods: {
-      getJson (url) {
-        return fetch(url)
-          .then(result => result.json())
-          .catch(err => console.log(err));
-      },
-      addProduct (product) {
-        console.log(product.id_product);
-      }
-    },
-    mounted () {
-      this.getJson(`${API + this.catalogURL}`)
-        .then(data => {
-          for (const dataElem of data) {
-            this.products.push(dataElem);
-          }
-        });
-      this.getJson(`getProducts.json`)
-        .then(data => {
-          for (const dataElem of data) {
-            this.products.push(dataElem);
-          }
-        });
-    }
-  });
-</script>
+<script src="./script/script.js"></script>
 </body>
 </html>
