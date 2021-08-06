@@ -9,7 +9,6 @@ const app = new Vue({
     cartURL: '/getBasket.json',
     cart: [],
     filtered: [],
-    userSearch: '',
     error: {
       status: false,
       message: '',

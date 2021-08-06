@@ -20,7 +20,7 @@ Vue.component('cart-product', {
                 <img :src="$root.catalogImg" alt="someimage" class="item__image">
                 <h2 class="item__title">{{ product.product_name }}</h2>
                 <p class="item__quantity">{{ product.quantity }}</p>
-                <p class="item__price"> {{ product.price }}</p>
+                <p class="item__price"> {{ product.price * product.quantity}}</p>
                 <button class="item__btn" @click="deleteProduct(product)">Удалить</button>
               </div>`,
   methods: {
