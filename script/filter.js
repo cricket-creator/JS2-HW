@@ -5,7 +5,7 @@ Vue.component('filter-comp', {
       userSearch: '',
     };
   },
-  template: `<form action="#" class="search-form" @submit.prevent="filter()">
+  template: `<form action="#" class="search-form" @submit.prevent="filter">
                 <input v-model="userSearch" type="text" class="search-field">
                 <button class="btn-search" type="submit">
                     Поиск

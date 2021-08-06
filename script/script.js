@@ -9,6 +9,10 @@ const app = new Vue({
     cartURL: '/getBasket.json',
     cart: [],
     filtered: [],
+    error: {
+      status: false,
+      message: '',
+    },
   },
   methods: {
     getJson (url) {
@@ -22,6 +26,10 @@ const app = new Vue({
       .then(data => {
         this.products = [...data];
         this.filtered = [...data];
+      })
+      .catch(err => {
+        this.error.status = true;
+        this.error.message = err;
       });
     this.getJson(`${API + this.cartURL}`)
       .then(data => {

@@ -28,7 +28,10 @@
             </div>
         </div>-->
     </header>
-    <products-list :filtered="filtered" :image="catalogImg" :cart="cart"></products-list>
+    <div>
+        <error-comp v-if="error.status"></error-comp>
+        <products-list v-else :filtered="filtered" :image="catalogImg" :cart="cart"></products-list>
+    </div>
     <!--<div v-if="!filtered.length">Product list is empty</div>
     <div v-for="product of this.filtered" class="product products__product">
         <img :src="imgCatalog" alt="someimage" class="product__image">
@@ -43,6 +46,7 @@
 <script src="./script/filter.js"></script>
 <script src="./script/products.js"></script>
 <script src="./script/cart.js"></script>
+<script src="./script/error.js"></script>
 
 <script src="./script/script.js"></script>
 </body>
