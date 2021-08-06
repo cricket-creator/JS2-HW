@@ -30,14 +30,20 @@ body, h2, p {
   display: flex;
   gap: 50px;
   position: relative;
+  margin-right: 50px;
 }
 .cart-block {
   border: 1px solid #000000;
   background-color: #fff;
   display: flex;
   flex-direction: column;
+  text-align: center;
   row-gap: 20px;
   padding: 20px;
+  position: absolute;
+  top: 55px;
+  right: -50px;
+  width: max-content;
 }
 
 .item {
@@ -94,12 +100,6 @@ body, h2, p {
   cursor: pointer;
   border: 1px solid transparent;
   padding: 10px 0;
-}
-
-.cart-block {
-  position: absolute;
-  top: 55px;
-  right: 0;
 }
 
 /*# sourceMappingURL=style.css.map */
