@@ -1,10 +1,5 @@
 Vue.component('filter-comp', {
-  props: ['filtered', 'catalog'],
-  data () {
-    return {
-      userSearch: '',
-    };
-  },
+  props: ['filtered', 'catalog', 'userSearch'],
   template: `<form action="#" class="search-form" @submit.prevent="filter">
                 <input v-model="userSearch" type="text" class="search-field">
                 <button class="btn-search" type="submit">
@@ -18,8 +13,8 @@ Vue.component('filter-comp', {
         this.filtered = Array.from(this.catalog);
       } else {
         this.filtered = this.filtered.filter(product => pattern.test(product.product_name));
+        console.log(this.filtered);
       }
-      console.log(this.filtered);
     }
   }
 });
