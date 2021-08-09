@@ -37,8 +37,8 @@ class Form {
     };
   }
 
-  #checkValid (field, value, pattern) {
-    if (this.patterns[pattern].test(this.values[value])) {
+  #checkValid (field, type) { //принимает поле и тип поля для проверки
+    if (this.patterns[type].test(this.values[type])) {
       field.style.borderColor = 'green';
     } else {
       field.style.borderColor = 'red';
@@ -52,8 +52,8 @@ class Form {
 
   init () {
     const form = document.querySelector(this.container);
-    for (const pattern in this.patterns) {
-      this.#checkValid(form.querySelector(this.container + `__${pattern}`), pattern, pattern);
+    for (const prop in this.values) {
+      this.#checkValid(form.querySelector(this.container + `__${prop}`), prop);
     }
   }
 }
