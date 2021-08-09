@@ -38,7 +38,7 @@ class Form {
   }
 
   #checkValid (field, value, pattern) {
-    if (pattern.test(value)) {
+    if (this.patterns[pattern].test(this.values[value])) {
       field.style.borderColor = 'green';
     } else {
       field.style.borderColor = 'red';
@@ -53,7 +53,7 @@ class Form {
   init () {
     const form = document.querySelector(this.container);
     for (const pattern in this.patterns) {
-      this.#checkValid(form.querySelector(this.container + `__${pattern}`), this.values[pattern], this.patterns[pattern]);
+      this.#checkValid(form.querySelector(this.container + `__${pattern}`), pattern, pattern);
     }
   }
 }
