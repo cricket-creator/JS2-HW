@@ -32,7 +32,7 @@ class Form {
     };
     this.patterns = {
       name: /[a-z,А-яё]/gi,
-      phone: /^[+]7[(]\d{3}[)](\d{3})-\d{4}/g,
+      phone: /\+7\(\d{3}\)\d{3}-\d{4}/g,
       email: /([\w\d.-]{4,20})@(\w{4,8}).(\w{2,6})/,
     };
   }
