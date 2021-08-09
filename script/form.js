@@ -1,3 +1,4 @@
+/*
 let str = `
   One: 'Hi Mary.' Two:'Oh, hi.'
 One: 'How are you doing?'
@@ -19,7 +20,60 @@ One: 'Sure. Bye.'
 
 const pattern = /([^a-z?.]')|('[^a-z?])/gi;
 console.log(str.replace(pattern, '"'));
+*/
 
+class Form {
+  constructor (name, phone, email, container = '.form') {
+    this.container = container;
+    this.values = {
+      name: name,
+      phone: phone,
+      email: email,
+    };
+    this.patterns = {
+      name: /[a-z,А-яё]/gi,
+      phone: /^[+]7[(]\d{3}[)](\d{3})-\d{4}/g,
+      email: /([\w\d.-]{4,20})@(\w{4,8}).(\w{2,6})/,
+    };
+  }
+
+  #checkValid (field, value, pattern) {
+    if (pattern.test(value)) {
+      field.style.borderColor = 'green';
+    } else {
+      field.style.borderColor = 'red';
+    }
+
+    const returnToDefault = setTimeout(() => {
+      field.style.borderColor = 'black';
+      clearTimeout(returnToDefault);
+    }, 5000);
+  }
+
+  init () {
+    const form = document.querySelector(this.container);
+    for (const pattern in this.patterns) {
+      this.#checkValid(form.querySelector(this.container + `__${pattern}`), this.values[pattern], this.patterns[pattern]);
+    }
+  }
+}
+
+const form = document.querySelector('.form');
+
+form.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+
+  const formInputValues = [
+    form.querySelector('.form__name').value,
+    form.querySelector('.form__phone').value,
+    form.querySelector('.form__email').value
+  ];
+
+  const validForm = new Form(...formInputValues);
+  validForm.init();
+});
+
+/*
 const form = document.querySelector('.form');
 const formName = form.querySelector('.form__name');
 const formTel = form.querySelector('.form__tel');
@@ -59,3 +113,4 @@ function checkValidation (name, tel, email) {
     });
   }, 5000);
 }
+*/

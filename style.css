@@ -219,7 +219,7 @@ img {
   align-self: center;
   cursor: pointer;
 }
-.form__name, .form__tel, .form__email, .form__area {
+.form__name, .form__phone, .form__email, .form__area {
   outline: none;
   border: 1px solid #000000;
 }
