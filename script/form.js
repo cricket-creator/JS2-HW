@@ -23,13 +23,8 @@ console.log(str.replace(pattern, '"'));
 */
 
 class Form {
-  constructor (name, phone, email, container = '.form') {
+  constructor (container) {
     this.container = container;
-    this.values = {
-      name: name,
-      phone: phone,
-      email: email,
-    };
     this.patterns = {
       name: /[a-z,А-яё]/gi,
       phone: /\+7\(\d{3}\)\d{3}-\d{4}/g,
@@ -37,8 +32,17 @@ class Form {
     };
   }
 
-  #checkValid (field, type) { //принимает поле и тип поля для проверки
-    if (this.patterns[type].test(this.values[type])) {
+  #getValues () {
+    const formInputs = document.querySelector(this.container).querySelectorAll('.form__input');
+    const inputData = {};
+    for (const formInput of formInputs) {
+      inputData[formInput.id.substr(4).toLowerCase()] = formInput.value;
+    }
+    return inputData;
+  }
+
+  #checkValid (field, value, type) { //принимает поле и тип поля для проверки
+    if (this.patterns[type].test(value)) {
       field.style.borderColor = 'green';
     } else {
       field.style.borderColor = 'red';
@@ -51,9 +55,10 @@ class Form {
   }
 
   init () {
+    const values = this.#getValues();
     const form = document.querySelector(this.container);
-    for (const prop in this.values) {
-      this.#checkValid(form.querySelector(this.container + `__${prop}`), prop);
+    for (const value in values) {
+      this.#checkValid(form.querySelector(this.container + `__${value}`), values[value], value);
     }
   }
 }
@@ -62,14 +67,7 @@ const form = document.querySelector('.form');
 
 form.addEventListener('submit', (evt) => {
   evt.preventDefault();
-
-  const formInputValues = [
-    form.querySelector('.form__name').value,
-    form.querySelector('.form__phone').value,
-    form.querySelector('.form__email').value
-  ];
-
-  const validForm = new Form(...formInputValues);
+  const validForm = new Form('.form');
   validForm.init();
 });
 
