@@ -23,22 +23,30 @@ console.log(str.replace(pattern, '"'));
 */
 
 class Form {
-  constructor (container) {
-    this.container = container;
+  constructor (formSelector) {
+    this.form = formSelector;
+    this.values = {};
     this.patterns = {
-      name: /[a-z,А-яё]/gi,
+      name: /[a-z,А-яЁё]/gi,
       phone: /\+7\(\d{3}\)\d{3}-\d{4}/g,
       email: /([\w\d.-]{4,20})@(\w{4,8}).(\w{2,6})/,
     };
+    this.init();
   }
 
-  #getValues () {
-    const formInputs = document.querySelector(this.container).querySelectorAll('.form__input');
-    const inputData = {};
-    for (const formInput of formInputs) {
-      inputData[formInput.id.substr(4).toLowerCase()] = formInput.value;
+  #getFormElem () {
+    return document.querySelector(this.form);
+  }
+
+  #getInputsElem () {
+    return this.#getFormElem().querySelectorAll('.form__input');
+  }
+
+  #getInputsValue () {
+    const inputs = this.#getInputsElem();
+    for (const input of inputs) {
+      this.values[input.id.substr(4).toLowerCase()] = input.value;
     }
-    return inputData;
   }
 
   #checkValid (field, value, type) { //принимает поле и тип поля для проверки
@@ -47,29 +55,29 @@ class Form {
     } else {
       field.style.borderColor = 'red';
     }
-
     const returnToDefault = setTimeout(() => {
       field.style.borderColor = 'black';
       clearTimeout(returnToDefault);
     }, 5000);
   }
 
+  #setSubmitHandler () {
+    const form = this.#getFormElem();
+    form.addEventListener('submit', evt => {
+      evt.preventDefault();
+      this.#getInputsValue();
+      for (const value in this.values) {
+        this.#checkValid(form.querySelector(this.form + `__${value}`), this.values[value], value);
+      }
+    });
+  }
+
   init () {
-    const values = this.#getValues();
-    const form = document.querySelector(this.container);
-    for (const value in values) {
-      this.#checkValid(form.querySelector(this.container + `__${value}`), values[value], value);
-    }
+    this.#setSubmitHandler();
   }
 }
 
-const form = document.querySelector('.form');
-
-form.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  const validForm = new Form('.form');
-  validForm.init();
-});
+const validForm = new Form('.form');
 
 /*
 const form = document.querySelector('.form');
