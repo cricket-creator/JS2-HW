@@ -1,3 +1,4 @@
+/*
 let str = `
   One: 'Hi Mary.' Two:'Oh, hi.'
 One: 'How are you doing?'
@@ -19,7 +20,66 @@ One: 'Sure. Bye.'
 
 const pattern = /([^a-z?.]')|('[^a-z?])/gi;
 console.log(str.replace(pattern, '"'));
+*/
 
+class Form {
+  constructor (formSelector) {
+    this.form = formSelector;
+    this.values = {};
+    this.patterns = {
+      name: /[a-z,А-яЁё]/gi,
+      phone: /\+7\(\d{3}\)\d{3}-\d{4}/g,
+      email: /([\w\d.-]{4,20})@(\w{4,8}).(\w{2,6})/,
+    };
+    this.init();
+  }
+
+  #getFormElem () {
+    return document.querySelector(this.form);
+  }
+
+  #getInputsElem () {
+    return this.#getFormElem().querySelectorAll('.form__input');
+  }
+
+  #getInputsValue () {
+    const inputs = this.#getInputsElem();
+    for (const input of inputs) {
+      this.values[input.id.substr(4).toLowerCase()] = input.value;
+    }
+  }
+
+  #checkValid (field, value, type) { //принимает поле и тип поля для проверки
+    if (this.patterns[type].test(value)) {
+      field.style.borderColor = 'green';
+    } else {
+      field.style.borderColor = 'red';
+    }
+    const returnToDefault = setTimeout(() => {
+      field.style.borderColor = 'black';
+      clearTimeout(returnToDefault);
+    }, 5000);
+  }
+
+  #setSubmitHandler () {
+    const form = this.#getFormElem();
+    form.addEventListener('submit', evt => {
+      evt.preventDefault();
+      this.#getInputsValue();
+      for (const value in this.values) {
+        this.#checkValid(form.querySelector(this.form + `__${value}`), this.values[value], value);
+      }
+    });
+  }
+
+  init () {
+    this.#setSubmitHandler();
+  }
+}
+
+const validForm = new Form('.form');
+
+/*
 const form = document.querySelector('.form');
 const formName = form.querySelector('.form__name');
 const formTel = form.querySelector('.form__tel');
@@ -59,3 +119,4 @@ function checkValidation (name, tel, email) {
     });
   }, 5000);
 }
+*/
