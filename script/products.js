@@ -1,28 +1,53 @@
-Vue.component('products-list', {
-  props: ['filtered', 'cart'],
-  template: `<div class="products container">
-                <div v-if="!filtered.length">Product list is empty</div>
-                <product v-for="product of filtered" :product="product" :products="filtered" :cart="cart"></product>
-             </div>`,
-});
-
-Vue.component('product', {
-  props: ['products', 'product', 'cart'],
+const product = {
+  props: ['product', 'img'],
   template: `<div class="product products__product">
-                <img :src="$root.catalogImg" alt="someimage" class="product__image">
+                <img :src="img" alt="someimage" class="product__image">
                 <h2 class="product__title">{{ product.product_name }}</h2>
                 <p class="product__price"> {{ product.price }}</p>
-                <button class="product__btn" @click="addProduct(product)">Купить</button>
+                <button class="product__btn" @click="$root.$refs.cart.addProduct(product)">Купить</button>
             </div>`,
+};
+
+const products_comp = {
+  components: { product },
+  data () {
+    return {
+      catalogUrl: '/catalogData.json',
+      products: [],
+      productImg: 'https://via.placeholder.com/200x150',
+      filtered: [],
+    };
+  },
   methods: {
-    addProduct (product) {
-      const find = this.cart.find(item => item.id_product === product.id_product);
-      if (find) {
-        find.quantity++;
+    filter (productName) {
+      const pattern = new RegExp(productName, 'i');
+      if (productName) {
+        this.filtered = this.filtered.filter(product => pattern.test(product.product_name));
       } else {
-        const product = Object.assign({ quantity: 1 }, this.product);
-        this.cart.push(product);
+        this.filtered = Array.from(this.products);
       }
     }
-  }
-});
+  },
+  mounted () {
+    this.$root.getJson(`${API + this.catalogUrl}`)
+      .then(data => {
+        for (const el of data) {
+          this.products.push(el);
+          this.filtered.push(el);
+        }
+      })
+      .catch(error => {
+        this.$root.$refs.error.status = true;
+        this.$root.$refs.error.message = error;
+      });
+  },
+  template: `<div class="products container">
+                <div v-if="!filtered.length">Product list is empty</div>
+                <product 
+                    v-for="product of filtered"
+                    :product="product"
+                    :key="product.id_product"
+                    :img="productImg"></product>
+             </div>`,
+
+};
