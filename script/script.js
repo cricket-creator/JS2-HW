@@ -1,24 +1,13 @@
-const products = [
-  { id: 1, title: 'Notebook', price: 2000 },
-  { id: 2, title: 'Mouse', price: 20 },
-  { id: 3, title: 'Keyboard', price: 200 },
-  { id: 4, title: 'Gamepad', price: 50 },
-];
+const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
 
-const renderProduct = (title, price) => {
-  return `
-    <div class="product product-list__product">
-        <h3 class="product__title">${title}</h3>
-        <p class="product__price">${price}</p>
-        <button class="product__btn">Купить</button>
-    </div>
-  `;
-};
-
-const renderProductsList = list => {
-  const productsList = list.map(item => renderProduct(item.title, item.price));
-  console.log(productsList);
-  document.querySelector('.products-list').innerHTML = productsList;
-};
-
-renderProductsList(products);
+const app = new Vue({
+  el: '#app',
+  components: { products_comp, filter_comp, cart_comp, error_comp },
+  methods: {
+    getJson (url) {
+      return fetch(url)
+        .then(result => result.json())
+        .catch(err => console.log(err));
+    }
+  },
+});
