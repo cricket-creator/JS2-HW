@@ -3,7 +3,7 @@ const product = {
   template: `<div class="product products__product">
                 <img :src="img" alt="someimage" class="product__image">
                 <h2 class="product__title">{{ product.product_name }}</h2>
-                <p class="product__price"> {{ product.price }}</p>
+                <p class="product__price">{{ product.price }} $</p>
                 <button class="product__btn" @click="$root.$refs.cart.addProduct(product)">Купить</button>
             </div>`,
 };

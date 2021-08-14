@@ -14,11 +14,14 @@ body, h2, p {
 }
 
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 30px 0;
     background-color: #000000;
+
+    &__wrap {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 30px 0;
+    }
 }
 
 .logo {
@@ -33,7 +36,8 @@ body, h2, p {
     margin-right: 50px;
 
     &-block {
-        border: 1px solid #000000;
+        border: 1px solid #cccccc;
+        border-top: none;
         background-color: #fff;
         display: flex;
         flex-direction: column;
@@ -44,15 +48,41 @@ body, h2, p {
         top: 55px;
         right: -50px;
         width: max-content;
+        z-index: 2;
+    }
+
+    &__btn {
+        cursor: pointer;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        width: 100px;
+
+        &:hover {
+            background-color: #cccccc;
+            transition: background-color 300ms;
+        }
+
+        &:active {
+            background-color: #c2c2c2;
+        }
     }
 }
 
 .item {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 1px solid #000000;
-    gap: 20px;
+    align-items: flex-end;
+    border: 1px solid #cccccc;
+    border-radius: 20px;
+    background-color: #ffffff;
+    overflow: hidden;
+    position: relative;
+
+    &__inner {
+        display: flex;
+        flex-direction: column;
+        row-gap: 12px;
+    }
 
     &__image {
         display: block;
@@ -61,19 +91,25 @@ body, h2, p {
     }
 
     &__title {
-
+        padding: 0 10px;
     }
 
     &__quantity {
-
+        padding: 0 10px;
     }
 
     &__price {
-
+        padding: 0 10px;
     }
 
     &__btn {
+        border: none;
+        cursor: pointer;
+        padding: 10px 0;
 
+        &:active {
+            background-color: #c2c2c2;
+        }
     }
 }
 
@@ -92,10 +128,11 @@ body, h2, p {
     border: none;
     padding: 5px 10px;
     border-radius: 0 10px 10px 0;
+    cursor: pointer;
 
     &:hover {
         background-color: #cccccc;
-        cursor: pointer;
+        transition: background-color 300ms;
     }
 }
 
@@ -111,6 +148,9 @@ body, h2, p {
     align-items: center;
     gap: 20px;
     border: 1px solid #cccccc;
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: #ffffff;
 
     &__image {
         display: block;
@@ -127,8 +167,17 @@ body, h2, p {
     &__btn {
         width: 100%;
         cursor: pointer;
-        border: 1px solid transparent;
+        border: none;
         padding: 10px 0;
+
+        &:active {
+            background-color: #c2c2c2;
+        }
+    }
+
+    &:hover {
+        transform: scale(1.1);
+        transition: transform 300ms;
     }
 }
 

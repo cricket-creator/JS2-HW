@@ -2,11 +2,13 @@ const cart_product = {
   props: ['item', 'img'],
   template: `<div class="item cart__item">
                 <img :src="img" alt="someimage" class="item__image">
-                <h2 class="item__title">{{ item.product_name }}</h2>
-                <p class="item__quantity">{{ item.quantity }}</p>
-                <p class="item__price"> {{ item.price * item.quantity}}</p>
-                <button class="item__btn" @click="$parent.deleteProduct(item)">Удалить</button>
-              </div>`,
+                <div class="item__inner">
+                    <h2 class="item__title">{{ item.product_name }}</h2>
+                    <p class="item__quantity">{{ item.quantity }} шт.</p>
+                    <p class="item__price">{{ item.price * item.quantity}} $</p>
+                    <button class="item__btn" @click="$parent.deleteProduct(item)">Удалить</button>   
+                </div>
+             </div>`,
 };
 
 const cart_comp = {
@@ -20,7 +22,7 @@ const cart_comp = {
     };
   },
   template: `<div class="cart">
-                <button class="btn-cart" type="button" @click="show = !show">Корзина</button>
+                <button class="cart__btn" type="button" @click="show = !show">Корзина</button>
                 <div class="cart-block invisible" v-show="show">
                     <div v-if="!cart.length">Cart is empty</div>
                     <cart_product v-for="item of cart" :item="item" :img="itemImg"></cart_product>

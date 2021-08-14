@@ -10,35 +10,17 @@
 </head>
 <body>
 <div id="app">
-    <header class="header container">
-        <div class="logo">E-shop</div>
-        <filter_comp ref="filter"></filter_comp>
-        <cart_comp ref="cart"></cart_comp>
-        <!--<div class="cart">
-            <button class="btn-cart" type="button" @click="show = !show">Корзина</button>
-            <div class="cart-block invisible" v-show="show" @mouseleave="closeCart">
-                <div v-if="!cart.length">Cart is empty</div>
-                <div class="item cart__item" v-for="product of this.cart">
-                    <img :src="imgCatalog" alt="someimage" class="item__image">
-                    <h2 class="item__title">{{ product.product_name }}</h2>
-                    <p class="item__quantity">{{ product.quantity }}</p>
-                    <p class="item__price"> {{ product.price }}</p>
-                    <button @click="deleteProduct(product)" class="item__btn">Удалить</button>
-                </div>
-            </div>
-        </div>-->
+    <header class="header">
+        <div class="header__wrap container">
+            <div class="logo">E-shop</div>
+            <filter_comp ref="filter"></filter_comp>
+            <cart_comp ref="cart"></cart_comp>
+        </div>
     </header>
     <div>
         <error_comp ref="error"></error_comp>
         <products_comp ref="products"></products_comp>
     </div>
-    <!--<div v-if="!filtered.length">Product list is empty</div>
-    <div v-for="product of this.filtered" class="product products__product">
-        <img :src="imgCatalog" alt="someimage" class="product__image">
-        <h2 class="product__title">{{ product.product_name }}</h2>
-        <p class="product__price"> {{ product.price }}</p>
-        <button @click="addProduct(product)" class="product__btn">Купить</button>
-    </div>-->
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
