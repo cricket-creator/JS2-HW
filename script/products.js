@@ -1,7 +1,7 @@
 const product = {
-  props: ['product', 'img'],
+  props: ['product'/*, 'img'*/],
   template: `<div class="product products__product">
-                <img :src="img" alt="someimage" class="product__image">
+                <img :src="product.product_image" alt="someimage" class="product__image">
                 <h2 class="product__title">{{ product.product_name }}</h2>
                 <p class="product__price">{{ product.price }} $</p>
                 <button class="product__btn" @click="$root.$refs.cart.addProduct(product)">Купить</button>
@@ -12,9 +12,9 @@ const products_comp = {
   components: { product },
   data () {
     return {
-      catalogUrl: '/catalogData.json',
+      // catalogUrl: '/catalogData.json',
       products: [],
-      productImg: 'https://via.placeholder.com/200x150',
+      // productImg: 'https://via.placeholder.com/200x150',
       filtered: [],
     };
   },
@@ -29,7 +29,7 @@ const products_comp = {
     }
   },
   mounted () {
-    this.$root.getJson(`${API + this.catalogUrl}`)
+    this.$root.getJson('/api/products')
       .then(data => {
         for (const el of data) {
           this.products.push(el);
@@ -42,12 +42,11 @@ const products_comp = {
       });
   },
   template: `<div class="products container">
-                <div v-if="!filtered.length">Product list is empty</div>
+                <div v-if="!filtered.length && !$root.$refs.error.status">Product list is empty</div>
                 <product 
                     v-for="product of filtered"
                     :product="product"
-                    :key="product.id_product"
-                    :img="productImg"></product>
+                    :key="product.id_product"></product>
              </div>`,
 
 };

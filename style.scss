@@ -82,12 +82,13 @@ body, h2, p {
         display: flex;
         flex-direction: column;
         row-gap: 12px;
+        width: 100%;
     }
 
     &__image {
         display: block;
         height: 150px;
-        width: 100%;
+        border-right: 1px solid #ccc;
     }
 
     &__title {
@@ -140,6 +141,8 @@ body, h2, p {
     padding: 50px 0;
     display: flex;
     justify-content: space-around;
+    flex-wrap: wrap;
+    row-gap: 50px;
 }
 
 .product {
@@ -151,9 +154,12 @@ body, h2, p {
     border-radius: 20px;
     overflow: hidden;
     background-color: #ffffff;
+    cursor: pointer;
 
     &__image {
         display: block;
+        width: 200px;
+        border-bottom: 1px solid #ccc;
     }
 
     &__title {

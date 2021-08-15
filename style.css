@@ -77,11 +77,12 @@ body, h2, p {
   display: flex;
   flex-direction: column;
   row-gap: 12px;
+  width: 100%;
 }
 .item__image {
   display: block;
   height: 150px;
-  width: 100%;
+  border-right: 1px solid #ccc;
 }
 .item__title {
   padding: 0 10px;
@@ -127,6 +128,8 @@ body, h2, p {
   padding: 50px 0;
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
+  row-gap: 50px;
 }
 
 .product {
@@ -138,9 +141,12 @@ body, h2, p {
   border-radius: 20px;
   overflow: hidden;
   background-color: #ffffff;
+  cursor: pointer;
 }
 .product__image {
   display: block;
+  width: 200px;
+  border-bottom: 1px solid #ccc;
 }
 .product__btn {
   width: 100%;
