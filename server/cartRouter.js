@@ -18,7 +18,7 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-  handler(req, res, 'changeUp', 'server/data/cart.json');
+  handler(req, res, 'change', 'server/data/cart.json');
 });
 
 router.delete('/:id', (req, res) => {

@@ -3,8 +3,8 @@ const fs = require('fs');
 
 const actions = {
   add: cart.add,
-  changeUp: cart.change,
-  changeDown: cart.remove
+  change: cart.change,
+  remove: cart.remove
 };
 
 const handler = (req, res, action, file) => {

@@ -58,12 +58,12 @@ const cart_comp = {
             }
           });
       } else {
-        this.$root.deleteJson(`/api/cart/${find.id_product}`)
-          .then(data => {
+        this.$root.deleteJson(`/api/cart/${find.id_product}`, { quantity: 0 })
+          /*.then(data => {
             if (data.result === 1) {
               this.cart.splice(this.cart.indexOf(product), 1);
             }
-          });
+          });*/
       }
       /*
       this.$root.getJson(`${API}/deleteFromBasket.json`)
