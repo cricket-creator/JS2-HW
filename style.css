@@ -14,28 +14,33 @@ body, h2, p {
 }
 
 .header {
-  background-color: #000000;
+  background-color: #cccccc;
 }
 .header__wrap {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 30px 0;
+  padding: 30px 50px;
 }
 
 .logo {
-  margin-left: 50px;
   color: #ffffff;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+.logo > span {
+  color: #000000;
 }
 
 .cart {
   display: flex;
   gap: 50px;
   position: relative;
-  margin-right: 50px;
 }
 .cart-block {
   border: 1px solid #cccccc;
+  border-radius: 0 0 20px 20px;
   border-top: none;
   background-color: #fff;
   display: flex;
@@ -44,7 +49,7 @@ body, h2, p {
   row-gap: 20px;
   padding: 20px;
   position: absolute;
-  top: 55px;
+  top: 70px;
   right: -50px;
   width: max-content;
   z-index: 2;
@@ -52,9 +57,10 @@ body, h2, p {
 .cart__btn {
   cursor: pointer;
   padding: 5px 10px;
-  border: none;
+  border: 1px solid #8c8c8c;
   border-radius: 5px;
   width: 100px;
+  height: 40px;
 }
 .cart__btn:hover {
   background-color: #cccccc;
@@ -107,14 +113,15 @@ body, h2, p {
 }
 
 .search-field {
-  border: none;
+  border: 1px solid #8c8c8c;
+  border-right: none;
   border-radius: 10px 0 0 10px;
   padding: 5px 10px;
   outline: none;
 }
 
 .btn-search {
-  border: none;
+  border: 1px solid #8c8c8c;
   padding: 5px 10px;
   border-radius: 0 10px 10px 0;
   cursor: pointer;
@@ -159,7 +166,8 @@ body, h2, p {
 }
 .product:hover {
   transform: scale(1.1);
-  transition: transform 300ms;
+  box-shadow: 0 0 20px 2px #000000;
+  transition: transform 300ms, box-shadow 300ms;
 }
 
 .error {
