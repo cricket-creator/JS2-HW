@@ -1,0 +1,9 @@
+/node_modules/
+/package.json
+/package-lock.json
+
+/mywebpack/node_modules/
+/mywebpack/package-lock.json
+/mywebpack/package.json
+/mywebpack/modules.js
+/mywebpack/webpack.config.js
