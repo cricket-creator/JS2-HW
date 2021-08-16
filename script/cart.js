@@ -88,3 +88,5 @@ const cart_comp = {
       });
   }
 };
+
+module.exports = cart_comp;

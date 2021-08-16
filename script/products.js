@@ -48,5 +48,6 @@ const products_comp = {
                     :product="product"
                     :key="product.id_product"></product>
              </div>`,
-
 };
+
+module.exports = products_comp;

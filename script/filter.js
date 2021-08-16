@@ -11,3 +11,5 @@ const filter_comp = {
                 </button>
             </form>`,
 };
+
+module.exports = filter_comp;
