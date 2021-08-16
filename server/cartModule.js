@@ -11,7 +11,11 @@ const change = (cart, req) => {
 
 const remove = (cart, req) => {
   const find = cart.contents.find(item => item.id_product === +req.params.id);
-  find.quantity -= req.body.quantity;
+  if (find.quantity > 1) {
+    find.quantity -= req.body.quantity;
+  } else {
+    cart.contents.splice(cart.contents.indexOf(find), 1);
+  }
   return JSON.stringify(cart, null, 4);
 };
 

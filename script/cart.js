@@ -51,19 +51,19 @@ const cart_comp = {
     deleteProduct (product) {
       const find = this.cart.find(item => item.id_product === product.id_product);
       if (find.quantity > 1) {
-        this.$root.putJson(`/api/cart/${find.id_product}`, { quantity: 1 })
+        this.$root.putJson(`/api/cart/${find.id_product}`, { quantity: -1 })
           .then(data => {
             if (data.result === 1) {
               find.quantity--;
             }
           });
       } else {
-        this.$root.deleteJson(`/api/cart/${find.id_product}`, { quantity: 0 })
-          /*.then(data => {
+        this.$root.deleteJson(`/api/cart/${find.id_product}`)
+          .then(data => {
             if (data.result === 1) {
               this.cart.splice(this.cart.indexOf(product), 1);
             }
-          });*/
+          });
       }
       /*
       this.$root.getJson(`${API}/deleteFromBasket.json`)
